@@ -1,0 +1,47 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Package plugin zips
+        run: |
+          chmod +x scripts/package-release.sh
+          VERSION="${GITHUB_REF_NAME#v}"
+          ./scripts/package-release.sh "$VERSION"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          body: |
+            ## Downloads
+
+            | File | MuseScore version |
+            |------|-------------------|
+            | `KalimbaNotation-musescore3-${{ github.ref_name }}.zip` | MuseScore **3.x** (and 4.0–4.3 / Qt5) |
+            | `KalimbaNotation-musescore4-${{ github.ref_name }}.zip` | MuseScore Studio **4.4+** (Qt6) |
+
+            Project page: https://musescore.org/en/project/kalimba-note-name-notation
+
+            ### Install
+            1. Download the zip for your MuseScore version.
+            2. Extract and copy the `KalimbaNotation` folder into your Plugins folder.
+            3. Install the three `.ttf` fonts from `KalimbaNotation/fonts/`.
+            4. Enable the plugin in Plugin Manager.
+          files: |
+            dist/KalimbaNotation-musescore3-*.zip
+            dist/KalimbaNotation-musescore4-*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -30,12 +30,13 @@ import MuseScore 3.0
 
 MuseScore {
 	version:    "1.0.00"
-	menuPath:   "Plugins." + qsTr("Kalimba Notation")
-	description: qsTr("This plugin adds named or numbered score for kalimba from notes.")
+	menuPath:   "Plugins." + i18n.tr("Kalimba Notation")
+	description: i18n.tr("This plugin adds named or numbered score for kalimba from notes.")
 
 	// ********************************************************************************
 	// External objects
 	// ********************************************************************************
+	I18n      { id: i18n }
 	Settings  { id: settings }
 	Helper    { id: helper }
 	Notation  { id: notation }
@@ -47,7 +48,7 @@ MuseScore {
 	onRun: {
 		var requiredVersion = "3.0.5"
 		if (helper.checkMuseScoreVersion(requiredVersion) == false) {
-			errorDialog.text = qsTr("The version of MuseScore must be %1 or higher.").arg(requiredVersion)
+			errorDialog.text = i18n.tr("The version of MuseScore must be %1 or higher.").arg(requiredVersion)
 			errorDialog.open()
 		} else if (!curScore) {
 			Qt.quit()
@@ -64,7 +65,7 @@ MuseScore {
 	property int margin: 11
 	Window {
 		id: window
-		title: qsTr("Kalimba Notation")
+		title: i18n.tr("Kalimba Notation")
 		minimumWidth:  mainLayout.implicitWidth  + 2 * margin
 		minimumHeight: mainLayout.implicitHeight + 2 * margin
 		maximumWidth:  mainLayout.implicitWidth  + 2 * margin
@@ -78,7 +79,7 @@ MuseScore {
 
 			// === Mode ===
 			GroupBox {
-				title: qsTr("Execution mode")
+				title: i18n.tr("Execution mode")
 				Layout.fillWidth: true
 				Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 				flat: true
@@ -88,8 +89,8 @@ MuseScore {
 					anchors.left: parent.left
 					anchors.right: parent.right
 					model: [
-						qsTr("Add notations for selected staff"),
-						qsTr("Add notations for selected range")
+						i18n.tr("Add notations for selected staff"),
+						i18n.tr("Add notations for selected range")
 					]
 					onCurrentIndexChanged: { helper.refreshWindow() }
 				}
@@ -98,7 +99,7 @@ MuseScore {
 			// === Target ===
 			GroupBox {
 				id: grpTargetSettings
-				title: qsTr("Target settings")
+				title: i18n.tr("Target settings")
 
 				Layout.fillWidth: true
 				GridLayout {
@@ -108,7 +109,7 @@ MuseScore {
 					// === Score ===
 					GroupBox {
 						id: grpscore
-						title: qsTr("Score")
+						title: i18n.tr("Score")
 						Layout.fillWidth: true
 						flat: true
 						ComboBox {
@@ -123,7 +124,7 @@ MuseScore {
 
 					// === Part ===
 					GroupBox {
-						title: qsTr("Part")
+						title: i18n.tr("Part")
 						Layout.fillWidth: true
 						flat: true
 						ComboBox {
@@ -139,7 +140,7 @@ MuseScore {
 
 					// === Staff ===
 					GroupBox {
-						title: qsTr("Staff")
+						title: i18n.tr("Staff")
 						Layout.fillWidth: true
 						flat: true
 						ComboBox {
@@ -152,7 +153,7 @@ MuseScore {
 
 					// === Voice ===
 					GroupBox {
-						title: qsTr("Voice")
+						title: i18n.tr("Voice")
 						Layout.fillWidth: true
 						flat: true
 						ComboBox {
@@ -169,7 +170,7 @@ MuseScore {
 			// === BASIC SETTIONGS ===
 			GroupBox {
 				id: grpBasicSettings
-				title: qsTr("Basic settings")
+				title: i18n.tr("Basic settings")
 				Layout.fillWidth: true
 
 				GridLayout {
@@ -178,7 +179,7 @@ MuseScore {
 					
 					// === Keys ===
 					GroupBox {
-						title: qsTr("Keys")
+						title: i18n.tr("Keys")
 						Layout.fillWidth: true
 						Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 						flat: true
@@ -188,8 +189,8 @@ MuseScore {
 							anchors.left: parent.left
 							anchors.right: parent.right
 							model: [
-								qsTr("17 keys"),
-								qsTr("21 keys")
+								i18n.tr("17 keys"),
+								i18n.tr("21 keys")
 							]
 							onCurrentIndexChanged: { helper.refreshWindow() }
 						}
@@ -197,7 +198,7 @@ MuseScore {
 
 					// === Notation type ===
 					GroupBox {
-						title: qsTr("Notation type")
+						title: i18n.tr("Notation type")
 						Layout.fillWidth: true
 						Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 						flat: true
@@ -207,9 +208,9 @@ MuseScore {
 							anchors.left: parent.left
 							anchors.right: parent.right
 							model: [
-								qsTr("Japanese name"),
-								qsTr("English name"),
-								qsTr("Number")
+								i18n.tr("Japanese name"),
+								i18n.tr("English name"),
+								i18n.tr("Number")
 							]
 							onCurrentIndexChanged: { helper.refreshWindow() }
 						}
@@ -217,7 +218,7 @@ MuseScore {
 
 					// === Notation placement ===
 					GroupBox {
-						title: qsTr("Notation placement")
+						title: i18n.tr("Notation placement")
 						Layout.fillWidth: true
 						Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 						flat: true
@@ -227,8 +228,8 @@ MuseScore {
 							anchors.left: parent.left
 							anchors.right: parent.right
 							model: [
-								qsTr("Below"),
-								qsTr("Above")
+								i18n.tr("Below"),
+								i18n.tr("Above")
 							]
 						}
 					}
@@ -237,7 +238,7 @@ MuseScore {
 
 			// === EXTENDED SETTIONGS ===
 			GroupBox {
-				title: qsTr("Extended settings")
+				title: i18n.tr("Extended settings")
 				Layout.fillWidth: true
 				anchors.top: grpBasicSettings.bottom
 
@@ -245,7 +246,7 @@ MuseScore {
 					anchors.fill: parent
 
 					// === Check voice range ===
-					CheckBox { id: cbCheckVoiceRange; text: qsTr("Check voice range(failed to stop)") }
+					CheckBox { id: cbCheckVoiceRange; text: i18n.tr("Check voice range(failed to stop)") }
 				}
 			}
 			TextArea {
@@ -259,15 +260,15 @@ MuseScore {
 				anchors.right: parent.right
 				columns: 2
 				RowLayout {
-					Button { id: defaultButton; text: qsTr("Default", "button"); onClicked: { settings.reset(); settings.load(); helper.refreshWindow() } }
+					Button { id: defaultButton; text: i18n.tr("Default", "button"); onClicked: { settings.reset(); settings.load(); helper.refreshWindow() } }
 					Button { id: debugButton; text: "Debug";  onClicked: { helper.debug() }
 						visible: false
 					}
 				}
 				RowLayout {
 					anchors.right: parent.right
-					Button { id: closeButton; text: qsTr("Cancel", "button"); onClicked: { window.close(); Qt.quit() } }
-					Button { id: okButton;    text: qsTr("OK", "button");     onClicked: { notation.execute(); settings.save(); /*window.close(); Qt.quit()*/ } }
+					Button { id: closeButton; text: i18n.tr("Cancel", "button"); onClicked: { window.close(); Qt.quit() } }
+					Button { id: okButton;    text: i18n.tr("OK", "button");     onClicked: { notation.execute(); settings.save(); /*window.close(); Qt.quit()*/ } }
 				}
 			}
 		}
@@ -277,7 +278,7 @@ MuseScore {
 			icon: StandardIcon.Warning
 			modality: Qt.WindowModal
 			standardButtons: StandardButton.Ok
-			title: qsTr("Error")
+			title: i18n.tr("Error")
 			text: ""
 			onAccepted: { errorDialog.visible = false }
 			visible: false

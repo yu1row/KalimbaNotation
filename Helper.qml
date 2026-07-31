@@ -141,7 +141,18 @@ Item {
 	// ------------------------------------------------------------
 	function setCurrentScore() {
 		var target = scores[cmbScore.currentIndex]
-		while (!curScore.is(target)) {
+		if (!target || !curScore) {
+			return
+		}
+		if (curScore.is(target)) {
+			return
+		}
+		// Cap iterations — next-score + is() can fail to converge
+		var max = (scores && scores.length) ? scores.length + 2 : 8
+		for (var i = 0; i < max; i++) {
+			if (curScore.is(target)) {
+				return
+			}
 			cmd("next-score")
 		}
 	}
@@ -170,7 +181,7 @@ Item {
 		while (cursor.segment) {
 			var e = cursor.element
 			if (checkValidVoiceRangeSub(e, is17keys, false) == false) {
-				return qsTr("There was a note out of range\n(Measure = %1)").arg(getMeasureNumber(score, cursor.measure))
+				return i18n.tr("There was a note out of range\n(Measure = %1)").arg(getMeasureNumber(score, cursor.measure))
 			}
 			cursor.next()
 		}
@@ -198,7 +209,7 @@ Item {
 				while (cursor.segment) {
 					var e = cursor.element
 					if (checkValidVoiceRangeSub(e, is17keys, true) == false) {
-						return qsTr("There was a note out of range\n(Measure = %1)").arg(getMeasureNumber(score, cursor.measure))
+						return i18n.tr("There was a note out of range\n(Measure = %1)").arg(getMeasureNumber(score, cursor.measure))
 					}
 					cursor.next()
 				}
