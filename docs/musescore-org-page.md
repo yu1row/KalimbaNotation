@@ -108,3 +108,15 @@ GitHub Releases に zip が2種類あります。お使いの MuseScore に合�
 | 入手先 | Download の扱いが不明瞭になりやすい | GitHub Releases の URL とファイル名規則を記載 |
 | フォント | 未記載 | 必須の3フォントを明記 |
 | インストール手順 | なし | 手順を追加 |
+
+---
+
+## スクリーンショット（プラグインページ用）
+
+リポジトリ内パス:
+
+- [`docs/images/kalimba-notation-dialog.png`](images/kalimba-notation-dialog.png)
+
+MuseScore Studio 4.4+ 向けダイアログ（日本語 UI）の画面です。musescore.org のプロジェクトページにアップロードする際はこのファイルを使ってください。
+
+![Kalimba Notation dialog](images/kalimba-notation-dialog.png)
